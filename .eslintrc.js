@@ -31,6 +31,7 @@ module.exports = {
 				'@typescript-eslint/no-unsafe-assignment': 0,
 				'@typescript-eslint/no-unsafe-member-access': 0,
 				'@typescript-eslint/ban-ts-comment': 0,
+				'@typescript-eslint/no-shadow': 2,
 			},
 			parserOptions: {
 				project: ['./tsconfig.json'],
@@ -92,6 +93,7 @@ module.exports = {
 		'consistent-return': 0,
 		'no-nested-ternary': 0,
 		'no-plusplus': 0,
+		'no-shadow': 'off',
 	},
 	settings: {
 		'import/resolver': {

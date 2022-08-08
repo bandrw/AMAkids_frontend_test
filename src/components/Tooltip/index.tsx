@@ -12,14 +12,16 @@ const useClasses = makeStyles(() => ({
 	},
 }));
 
-const Tooltip: React.FC<TooltipProps> = ({children, ...props}) => {
-	const classes = useClasses();
+const Tooltip = React.forwardRef<unknown, TooltipProps>(
+	({children, ...props}, ref) => {
+		const classes = useClasses();
 
-	return (
-		<MUITooltip classes={classes} {...props}>
-			{children}
-		</MUITooltip>
-	);
-};
+		return (
+			<MUITooltip ref={ref} classes={classes} {...props}>
+				{children}
+			</MUITooltip>
+		);
+	}
+);
 
 export default Tooltip;

@@ -2,6 +2,7 @@ import './styles.scss';
 
 import {cn} from '@bem-react/classname';
 import Grid from '@components/Grid';
+import GameInfo from '@features/labyrinth-game/ui/game-info';
 import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 import React from 'react';
 
@@ -23,6 +24,9 @@ const Header: React.FC = () => {
 			</Grid>
 			<Grid item>
 				<h1>Labyrinth</h1>
+			</Grid>
+			<Grid item>
+				<GameInfo />
 			</Grid>
 		</Grid>
 	);
