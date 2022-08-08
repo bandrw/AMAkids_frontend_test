@@ -1,8 +1,10 @@
 import Button from '@components/Button';
 import Grid from '@components/Grid';
 import Spin from '@components/Spin';
+import Tooltip from '@components/Tooltip';
 import {pickField} from '@features/labyrinth-game/model/labyrinthSlice';
 import CheckIcon from '@mui/icons-material/Check';
+import FlagIcon from '@mui/icons-material/Flag';
 import StarIcon from '@mui/icons-material/Star';
 import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
 import {useAppDispatch, useAppSelector} from '@shared/store/hooks';
@@ -49,17 +51,34 @@ export const GameFieldRoot: React.FC<GameFieldProps> = ({
 							sx={{
 								width: buttonSize,
 								height: buttonSize,
+								position: 'relative',
 							}}
-							onClick={() => onPick(i)}
+							onClick={view === 'inGame' ? () => onPick(i) : undefined}
 						>
-							{startPosition === i ? 'Start' : null}
-							{isPickedCorrectly ? (
-								<CheckIcon sx={{fontSize: '2rem', color: '#00ff00'}} />
-							) : isPickedWrong ? (
-								<ThumbDownAltIcon sx={{fontSize: '2rem', color: '#ff0000'}} />
-							) : isAnswerWithFail ? (
-								<StarIcon sx={{fontSize: '2rem', color: 'gold'}} />
+							{startPosition === i ? (
+								<Tooltip title="Start">
+									<FlagIcon sx={{fontSize: '2rem'}} />
+								</Tooltip>
 							) : null}
+							<Grid position="absolute" top={5} right={5}>
+								{isPickedCorrectly ? (
+									<Tooltip title="Correct">
+										<CheckIcon
+											sx={{fontSize: '2rem', color: 'var(--color-success)'}}
+										/>
+									</Tooltip>
+								) : isPickedWrong ? (
+									<Tooltip title="Wrong">
+										<ThumbDownAltIcon
+											sx={{fontSize: '2rem', color: 'var(--color-failure)'}}
+										/>
+									</Tooltip>
+								) : isAnswerWithFail ? (
+									<Tooltip title="Answer">
+										<StarIcon sx={{fontSize: '2rem', color: 'gold'}} />
+									</Tooltip>
+								) : null}
+							</Grid>
 						</Button>
 					</Grid>
 				);

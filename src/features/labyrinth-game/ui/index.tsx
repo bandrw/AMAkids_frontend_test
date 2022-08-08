@@ -9,11 +9,13 @@ import GameMoves from './game-moves';
 
 interface LabyrinthGameRootProps {
 	view: 'inGame' | 'finished';
+	success?: boolean;
 	onTryAgain: () => void;
 }
 
 export const LabyrinthGameRoot: React.FC<LabyrinthGameRootProps> = ({
 	view,
+	success,
 	onTryAgain,
 }) => {
 	return (
@@ -26,7 +28,21 @@ export const LabyrinthGameRoot: React.FC<LabyrinthGameRootProps> = ({
 			</Grid>
 			{view === 'finished' && (
 				<Grid item>
-					<Button onClick={onTryAgain}>Try again</Button>
+					<Grid
+						container
+						gap={2}
+						justifyContent="center"
+						flexDirection="column"
+					>
+						<Grid item sx={{fontSize: '1.5rem'}}>
+							{success ? 'Correct! 🙂' : 'Wrong 🙁'}
+						</Grid>
+						<Grid item>
+							<Button fullWidth variant="contained" onClick={onTryAgain}>
+								{success ? 'Play again' : 'Try again'}
+							</Button>
+						</Grid>
+					</Grid>
 				</Grid>
 			)}
 		</Grid>
@@ -34,7 +50,9 @@ export const LabyrinthGameRoot: React.FC<LabyrinthGameRootProps> = ({
 };
 
 const LabyrinthGame: React.FC = () => {
-	const {view} = useAppSelector((state) => state.labyrinth);
+	const {view, answer, pickedPosition} = useAppSelector(
+		(state) => state.labyrinth
+	);
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {
@@ -45,7 +63,13 @@ const LabyrinthGame: React.FC = () => {
 		dispatch(startGame());
 	}, [dispatch]);
 
-	return <LabyrinthGameRoot view={view} onTryAgain={tryAgain} />;
+	return (
+		<LabyrinthGameRoot
+			view={view}
+			onTryAgain={tryAgain}
+			success={answer !== null && answer === pickedPosition}
+		/>
+	);
 };
 
 export default LabyrinthGame;

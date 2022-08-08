@@ -13,7 +13,7 @@ const GameInfo: React.FC = () => {
 	return (
 		<ClickAwayListener onClickAway={closeTooltip}>
 			<Tooltip
-				placement="right"
+				placement="bottom-end"
 				arrow
 				open={isOpened}
 				onClose={closeTooltip}

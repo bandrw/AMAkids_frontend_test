@@ -23,7 +23,7 @@ export const GameMovesRoot: React.FC<GameMovesProps> = ({
 	fieldSize = 50,
 }) => {
 	return (
-		<Grid container gap={1}>
+		<Grid container gap={1} justifyContent="center">
 			{moves.map((move, i) => (
 				<Grid
 					key={i}
