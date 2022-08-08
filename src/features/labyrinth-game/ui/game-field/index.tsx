@@ -1,9 +1,12 @@
 import Button from '@components/Button';
 import Grid from '@components/Grid';
+import Spin from '@components/Spin';
+import {pickField} from '@features/labyrinth-game/model/labyrinthSlice';
 import CheckIcon from '@mui/icons-material/Check';
 import StarIcon from '@mui/icons-material/Star';
 import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
-import React from 'react';
+import {useAppDispatch, useAppSelector} from '@shared/store/hooks';
+import React, {useCallback} from 'react';
 
 interface GameFieldProps {
 	view: 'inGame' | 'finished';
@@ -15,7 +18,7 @@ interface GameFieldProps {
 	onPick: (index: number) => void;
 }
 
-const GameField: React.FC<GameFieldProps> = ({
+export const GameFieldRoot: React.FC<GameFieldProps> = ({
 	view,
 	size,
 	buttonSize = 100,
@@ -62,6 +65,33 @@ const GameField: React.FC<GameFieldProps> = ({
 				);
 			})}
 		</Grid>
+	);
+};
+
+const GameField: React.FC = () => {
+	const {view, size, startPosition, pickedPosition, answer} = useAppSelector(
+		(state) => state.labyrinth
+	);
+	const dispatch = useAppDispatch();
+
+	const onPick = useCallback(
+		(index: number) => {
+			dispatch(pickField(index));
+		},
+		[dispatch]
+	);
+
+	return startPosition !== null && answer !== null ? (
+		<GameFieldRoot
+			view={view}
+			size={size}
+			startPosition={startPosition}
+			pickedPosition={pickedPosition}
+			answer={answer}
+			onPick={onPick}
+		/>
+	) : (
+		<Spin />
 	);
 };
 
