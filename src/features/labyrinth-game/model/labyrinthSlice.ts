@@ -58,8 +58,11 @@ export const labyrinthSlice = createSlice({
 			state.view = 'finished';
 			state.pickedPosition = action.payload;
 		},
+		setSize: (state: LabyrinthState, action: PayloadAction<number>) => {
+			state.size = action.payload;
+		},
 	},
 });
 
-export const {startGame, pickField} = labyrinthSlice.actions;
+export const {startGame, pickField, setSize} = labyrinthSlice.actions;
 export default labyrinthSlice.reducer;
